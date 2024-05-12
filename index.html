@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>World of Coffee</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&display=swap" rel="stylesheet">
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src="https://unpkg.com/intersection-observer"></script>
+	<script src="https://unpkg.com/scrollama"></script>
+</head>
+<style type="text/css">
+	body, html {
+		top:0;
+		left:0;
+		margin:0;
+		color: #a03632;
+		font-family:'Geologica', sans-serif;
+	}
+	nav	{
+		background-color:white;
+		position:fixed;
+		width:100%;
+		display:flex;
+		justify-content: center;
+		align-items:center;
+		border-bottom:0.05em solid black;
+		z-index:100;
+	}
+	.title {
+		height:50vh;
+		color:white;
+		background-color:#a03632;
+		background-image:url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');*/
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: left top;
+		background-size: auto 100%;
+	}
+	.title h1 {
+		font-size:3em;
+	}
+	.title h2 {
+		font-size:1em;
+		font-weight:400;
+	}
+	.header {
+		text-align:center;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		border:0em solid black;
+		padding:5% 0%;
+/*		animation: fadeIn 0.1s ease-in-out;*/
+	}
+	.header h1{
+		font-family:'Geologica', sans-serif;
+		font-weight:800;
+		margin:0;
+	}
+	.header h2 {
+		margin:0;
+	}
+	.sticky {
+		float:right;
+		top:25%;
+		position:sticky;
+		width:50%;
+		display:inline-flex;
+					background-color:white;
+	}
+	.leftside{
+		background-color:#a03632;
+		color:white;
+		width: 30%;
+    	padding: 5% 10% 5% 5%;
+	}
+	.progressive{
+		width:100%;
+		display:block;
+		margin-top:10%!important;
+		margin-bottom:50%!important;
+	}
+	.end {
+		margin-bottom:20%!important;
+	}
+	#counter {
+		width:100%;
+		font-size:10em;
+		text-align:center;
+		margin:0;
+		padding:0%;
+		line-height:1em;
+		font-weight: 800;
+    	letter-spacing: -0.05em;
+	}
+	#counter h2{
+		text-align:center;
+	}
+	.text {
+		margin:5%;
+		line-height:2em;
+		opacity:0;
+		margin-top:10%;
+		transition:0.1s;
+	}
+	.text h1 {
+		font-size:4em;
+		letter-spacing:-0.05em;
+		line-height:1em;
+		font-weight:900;
+		width:100%;
+	}
+	.text h2 {
+		font-weight:400;
+		font-size:1em;
+		font-style:italic;
+	}
+	.sticky h1 {
+		width:100%;
+		font-size:3em;
+	}
+	.sticky h2 {
+		font-size:0.8em;
+		text-transform:uppercase;
+		letter-spacing:0.1em;
+	}
+	.center_aligner {
+		overflow:none;
+		width:90%;
+		display:flex;
+		align-items:center;
+		justify-content:center;
+		margin:5% 5%;
+	}
+	iframe {
+		border:0.5em solid black;
+		width:900px;
+		height:500px;
+	}
+	.tableauPlaceholder{
+		width:90%;
+		z-index:0;
+	}
+	img{
+		text-align:center;
+		align-items:center;
+		margin:0%;
+		display:inline-block;
+		border:0.1em solid #a03632;
+	}
+	.caption {
+		font-size:0.8em;
+		color:#666666;
+	}
+	.small {
+		width:30%;
+	}
+	.large {
+		width:100%;
+		display:block;
+	}
+	@keyframes fadeIn {
+		0%{
+			opacity:0;
+		}
+		100%{
+			opacity:1;
+		}
+	}
+	@media screen and (max-width:767px){
+		.sticky {
+	/*		bottom:0;*/
+			width:50%;
+			float:none;
+			margin:auto;
+			display:flex;
+			line-height:2em;
+		}
+		.sticky h1 {
+			font-size:2em;
+			line-height:2em;
+		}
+		.sticky h2 {
+			font-size:0.5em;
+		}
+		#counter {
+			font-size:5em;
+		}
+		.leftside {
+			color: white;
+			width: 85%;
+    		padding: 5% 10% 5% 5%;
+		}
+		.small {
+			width:80%;
+		}
+		.title {
+			height:80vh;
+		}
+		.text h1 {
+			font-size:2.5em;
+			width:80%;
+		}
+		.text {
+			margin:5% 5%;
+		}
+		iframe {
+			height:300px;
+		}
+
+	}
+</style>
+<body>
+
+<!-- nav -->
+<nav>
+	<h3>World of Coffee | Coffee Varieties Around the World</h3>
+</nav>
+
+<!-- text -->
+<div class='header title step'>
+	<div class='aligner'>
+		<h1>World of Coffee</h1>
+		<h2>Coffee Varieties Around the World</h2>	
+	</div>
+</div>
+
+
+<div class='text'>
+	<h1>Coffee is grown around the world, predominantly in the "bean belt". </h1>
+	The Coffee Quality Institute tasted 1,338 coffee beans from 34 countries and graded their acidity, flavor, and sweetness. Beans from all over the world have slightly different attributes - perhaps you prefer Sumatra beans from Indonesia, or an Ethiopian blend. Let's dive in to see what distinguishes these beans beyond their origins.
+</div>
+
+<!-- tableau public -->
+<div class='center_aligner'>
+	<!-- insert tableau public embed link below this line -->
+	<div class='tableauPlaceholder' id='viz1715484989078' style='position: relative'><noscript><a href='#'><img alt='Attribute Map ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Th&#47;TheBeanBelt&#47;AttributeMap&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='TheBeanBelt&#47;AttributeMap' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Th&#47;TheBeanBelt&#47;AttributeMap&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1715484989078');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</div>
+
+<div class='text'>
+	<h1>The beans! </h1>
+	First, let's get to know the different varieties of coffee beans in the data. The size and color of each segment of the treemap below represents the count of distinct beans studied in this dataset. In the "Other" categories, it could be any of the dozens of varieties of coffee beans not listed. The hover tooltip shows where the beans in this dataset are grown.
+</div>
+
+<!-- tableau public -->
+<div class='center_aligner'>
+	<!-- insert tableau public embed link below this line -->
+	<div class='tableauPlaceholder' id='viz1715485107265' style='position: relative'><noscript><a href='#'><img alt='Coffee Variety Overview ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Co&#47;CoffeeVarieties&#47;CoffeeVarietyOverview&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='CoffeeVarieties&#47;CoffeeVarietyOverview' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Co&#47;CoffeeVarieties&#47;CoffeeVarietyOverview&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1715485107265');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</div>
+
+<div class='text'>
+	<h1>Bean Acidity</h1>
+	According to Creature Coffee, coffee acidity refers to the brightness you taste from the citric, malic, and acetic acids in the coffee. In general, Arabicas are more acidic than Robustas. Usually, the higher the elevation, the higher the acidity. The below acidity is not a pH level, but rather a standardized measure on a scale of 10. A higher number means  higher acidity.
+</div>
+
+<!-- tableau public -->
+<div class='center_aligner'>
+	<!-- insert tableau public embed link below this line -->
+	<div class='tableauPlaceholder' id='viz1715487653586' style='position: relative'><noscript><a href='#'><img alt='Acidity Map ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ac&#47;AcidityMap&#47;AcidityMap&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='AcidityMap&#47;AcidityMap' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ac&#47;AcidityMap&#47;AcidityMap&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1715487653586');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</div>
+
+
+<div class='text'>
+	<h1>Bean Flavor</h1>
+	As noted in the variety overview treemap, coffee beans have a wide range of flavor profiles. From chocolate to fruity to herbal, coffee can appeal to anyone's tastes! This data gives flavor a number, 1 to 10, with 10 being a strong flavor and 1 having not much flavor at all. Since acidity plays a big part in the flavor profile, the flavor map and the acidity map look pretty similar.
+</div>
+
+<!-- tableau public -->
+<div class='center_aligner'>
+	<!-- insert tableau public embed link below this line -->
+	<div class='tableauPlaceholder' id='viz1715485555809' style='position: relative'><noscript><a href='#'><img alt='Flavor Map ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fl&#47;FlavorMap&#47;FlavorMap&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='FlavorMap&#47;FlavorMap' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Fl&#47;FlavorMap&#47;FlavorMap&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1715485555809');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</div>
+
+<div class='text'>
+	<h1>Bean Sweetness</h1>
+	To balance out the acidity in a cup of coffee, you need some sweetness! Most of the beans in this dataset are pretty sweet, with Haiti, Ecuador, and India being the least sweet of the bunch.
+</div>
+
+<!-- tableau public -->
+<div class='center_aligner'>
+	<!-- insert tableau public embed link below this line -->
+	<div class='tableauPlaceholder' id='viz1715487791912' style='position: relative'><noscript><a href='#'><img alt='Sweetness Map ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Sw&#47;SweetnessMap&#47;SweetnessMap&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='SweetnessMap&#47;SweetnessMap' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Sw&#47;SweetnessMap&#47;SweetnessMap&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1715487791912');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+</div>
+
+
+<div class='text'>
+	<h1>Now for the superlatives...</h1>
+	Below are the most acidic, most flavorful, and sweetest beans - voted for by science!
+</div>
+
+
+<!-- counter -->
+<div class='header sticky step' id='dynamic_sticky1'>
+</div>
+
+
+<div class='leftside'>
+
+	<div class='text progressive'>
+	<h1>Most acidic</h1>
+	Papua New Guinea's one singular bean in the whole study is the most acidic by a large margin, 8.33/10.
+	</div>
+
+	<div class='text progressive'>
+	<h1>Most flavorful</h1>
+	Papua New Guinea's simple Arabica takes the prize for most flavorful coffee at a whopping 8.42/10.
+	</div>
+
+	<div class='text progressive end'>
+	<h1>Sweetest</h1>
+	Lots of countries in this country had very sweet beans. This prize goes to the country with the most (quantity) sweetest (quality) beans. At 40 distinct beans and a perfect 10/10, Tanzania!
+	</div>
+
+</div>
+
+
+
+<div class='text'>
+	<h1>Takeaways</h1>
+	There is so much variety in acidity, flavor fullness, and sweetness in the coffee produced throughout the countries in the Bean Belt. I hope this visual essay was informative, and makes you appreciate the brew in your cup!
+</div>
+
+<!-- interactive embed, adjust the width and height as necessary, copy lines 155 to 157 to create a new interactive embed --> 
+<!-- <div class='center_aligner'>
+	<iframe src="interactive.html" frameBorder=0 scrolling=no></iframe>
+</div> -->
+
+
+<!-- image 3 -->
+<div class='center_aligner'>
+	<img class='large' src="images/3.png"> 	
+</div>
+
+</body>
+<script type="text/javascript">
+
+// instantiate the scrollama
+const scroller = scrollama();
+const scroller2 = scrollama();
+
+scroller
+  .setup({
+    step: ".text",
+    offset: 0.9,
+  })
+  .onStepEnter(response => {
+    // { element, index, direction }
+    el=response.element;
+    el.style.opacity=1;
+    el.style.marginTop='5%';    
+  })
+  .onStepExit(response => {
+    // { element, index, direction }  
+    el=response.element;
+  })
+  ;
+ // setup resize event
+window.addEventListener("resize", scroller.resize);
+
+scroller2
+  .setup({
+    step: ".progressive",
+    offset: 0.5,
+  })
+  .onStepEnter(response => {
+    // { element, index, direction }
+    el=response.element;
+    el.style.opacity=1;
+    if(response.index==0 || 1 || 2){
+    	stick('dynamic_sticky1')
+    	response.direction=='down'
+    	if(response.index==0){
+    		count(1,8.33,1,'Papua New Guinea','Acidity','dynamic_sticky1')
+    	} else if (response.index==1){
+    		count(1,8.42,1,'Papua New Guinea','Flavor','dynamic_sticky1')
+    	} else if (response.index==2){
+    		count(1,10,1,'Tanzania','Sweetness','dynamic_sticky1')
+    	}
+    }
+  })
+  .onStepExit(response => {
+    // { element, index, direction }  
+    el=response.element;
+    console.log(response.index)
+    if(response.index==2){
+    	unstick('dynamic_sticky1')
+    }
+    el.style.opacity=0;
+  })
+  ;
+ // setup resize event
+window.addEventListener("resize", scroller2.resize);
+
+function count(number1, number2, step, title, label, location_id, prefix='', suffix=''){
+	target = document.querySelector('#'+location_id)
+	console.log(target)
+	let text=number1;
+
+	setInterval(function(){
+		if(text<number2){
+		// if(text!=number2){
+			text += step
+			if(text > number2)
+				text = number2
+			// num = text+step
+			// if(num % 1 == 0){
+			// 	text = num
+			// }	else {
+			// 	text = parseFloat(num.toFixed(2))
+			// }
+			target.innerHTML="<div class='aligner'><h1>"+title+"</h1><div id='counter'>"+prefix+text+suffix+"</div><h2>"+label+"</h2></div>"
+		}
+	}, 30);
+}
+
+function stick(location_id){
+	target = document.querySelector('#'+location_id)
+	target.style.position="sticky"
+}
+
+function unstick(location_id){
+	target = document.querySelector('#'+location_id)
+	target.style.position="relative"
+}
+
+</script>
+
+</html>
